@@ -2,8 +2,8 @@ import { memo } from 'react';
 
 import { Box, Image, useDisclosure } from '@chakra-ui/react';
 
-import { VideoPlayer } from '@app/components/video-player/video-player';
-import { VideoPlayerContainer } from '@app/components/video-player/video-player-container';
+import { PlayerContainer } from '@app/components/video-players/player-container';
+import { PreviewPlayer } from '@app/components/video-players/preview-player';
 import { useIsDarkTheme } from '@app/hooks/is-dark-theme.hook';
 
 interface Props {
@@ -31,9 +31,9 @@ export const CardMedia = memo(({ title, imageLink, videoLink }: Props): JSX.Elem
             onMouseLeave={onClose}
         >
             {isOpen && videoLink && (
-                <VideoPlayerContainer position="absolute" borderRadius="none" w="100%" h="100%" top={0} left={0}>
-                    <VideoPlayer src={videoLink} poster={imageSrc} />
-                </VideoPlayerContainer>
+                <PlayerContainer position="absolute" borderRadius="none" w="100%" h="100%" top={0} left={0}>
+                    <PreviewPlayer src={videoLink} poster={imageSrc} />
+                </PlayerContainer>
             )}
             <Image w="100%" h="100%" alt={title} objectFit="cover" src={imageSrc} />
         </Box>

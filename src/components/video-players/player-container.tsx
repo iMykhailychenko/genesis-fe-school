@@ -7,7 +7,7 @@ interface Props extends BoxProps {
     objectFit?: 'cover' | 'contain';
     children: ReactNode;
 }
-export const VideoPlayerContainer = ({ children, objectFit = 'cover', borderRadius = 'md', ...props }: Props): JSX.Element => {
+export const PlayerContainer = ({ children, objectFit = 'cover', borderRadius = 'md', ...props }: Props): JSX.Element => {
     return (
         <Box
             bg="black"

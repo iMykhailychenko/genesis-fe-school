@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 
 import { SkillsInfo } from '@app/components/course-card/components/skills-info';
-import { progess } from '@app/utils/progress/progess';
+import { progress } from '@app/utils/progress/progress';
 
 interface Props {
     title: string;
@@ -24,7 +24,7 @@ interface Props {
 }
 export const CardBody = memo(({ title, description, tags, skills, lessonsCount, courseId }: Props): JSX.Element => {
     const lessonsDone = useMemo(
-        () => Object.values(progess.getCourseProgress(courseId).lessons).filter(lesson => lesson.isDone).length,
+        () => Object.values(progress.getCourseProgress(courseId).lessons).filter(lesson => lesson.isDone).length,
         [],
     );
 

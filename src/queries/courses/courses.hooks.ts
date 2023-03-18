@@ -10,9 +10,10 @@ export const useCoursesListQuery = (): UseQueryResult<CoursesListType> => {
     });
 };
 
-export const useSingleCourseQuery = (courseId: string): UseQueryResult<SingleCourseType> => {
+export const useSingleCourseQuery = (courseId?: string): UseQueryResult<SingleCourseType> => {
     return useQuery<SingleCourseType>({
         queryKey: ['courses', courseId],
         queryFn: () => singleCourseFetcher(courseId),
+        enabled: Boolean(courseId),
     });
 };

@@ -10,7 +10,7 @@ import {
     UpdateProgressParams,
 } from '@app/utils/progress/types';
 
-class Progess {
+class Progress {
     private readonly IS_DONE_OFFSET = 5;
     public static readonly PROGRESS_KEY = 'course-progress-key';
 
@@ -23,7 +23,7 @@ class Progess {
 
     public getLessonProgress = (courseId: CourseId, lessonId: LessonId): SingleLessonProgressType => {
         const progress = this.storage.getLocalData();
-        return get(progress, [courseId, 'lessons', lessonId], {}) as SingleLessonProgressType;
+        return get(progress, [courseId, 'lessons', lessonId], { time: 0, isDone: false }) as SingleLessonProgressType;
     };
 
     public updateProgress = (newData: UpdateProgressParams): void => {
@@ -60,4 +60,4 @@ class Progess {
     };
 }
 
-export const progess = new Progess(new Storage<CourseProgressType>(Progess.PROGRESS_KEY));
+export const progress = new Progress(new Storage<CourseProgressType>(Progress.PROGRESS_KEY));

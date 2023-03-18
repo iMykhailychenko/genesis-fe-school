@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 
 import { AuthWrapper } from '@app/components/auth-wrapper/auth-wrapper';
+import { VideoProvider } from '@app/context/vidoe.context';
 import { Pages } from '@app/pages/pages';
 import { theme } from '@app/utils/theme';
 
@@ -21,7 +22,9 @@ export const Root = (): JSX.Element => {
             <QueryClientProvider client={queryClient}>
                 <BrowserRouter>
                     <AuthWrapper>
-                        <Pages />
+                        <VideoProvider>
+                            <Pages />
+                        </VideoProvider>
                     </AuthWrapper>
                 </BrowserRouter>
             </QueryClientProvider>

@@ -1,16 +1,20 @@
+import { memo } from 'react';
+
 import { Flex, Stack, Heading, Text, Tag } from '@chakra-ui/react';
 
 import { Rating } from '@app/components/rating/rating';
-import { SingleCourseType } from '@app/queries/courses/courses.types';
 
 interface Props {
-    course: SingleCourseType;
+    title: string;
+    rating: number;
+    description: string;
+    skills: string[];
 }
-export const SingleCourseInfo = ({ course }: Props): JSX.Element => {
+export const SingleCourseInfo = memo(({ title, rating, description, skills }: Props): JSX.Element => {
     return (
         <Stack spacing={5}>
             <Flex alignItems="center" flexWrap="wrap">
-                {course.meta.skills.map(skill => (
+                {skills.map(skill => (
                     <Tag mr={1} mb={2} key={skill} size="lg" colorScheme="red">
                         {skill}
                     </Tag>
@@ -18,11 +22,13 @@ export const SingleCourseInfo = ({ course }: Props): JSX.Element => {
             </Flex>
 
             <Flex alignItems="flex-start" justifyContent="space-between">
-                <Heading mr={8}>{course.title}</Heading>
-                <Rating value={course.rating} mt={2} />
+                <Heading mr={8}>{title}</Heading>
+                <Rating value={rating} mt={2} />
             </Flex>
 
-            <Text fontSize="lg">{course.description}</Text>
+            <Text fontSize="lg">{description}</Text>
         </Stack>
     );
-};
+});
+
+SingleCourseInfo.displayName = 'SingleCourseInfo';
