@@ -9,7 +9,7 @@ import { useCoursesListQuery } from '@app/queries/courses/courses.hooks';
 
 const skeletonArray = range(5);
 
-export const CoursesCards = (): JSX.Element => {
+export const CoursesList = (): JSX.Element => {
     const { data, isLoading } = useCoursesListQuery();
 
     const [page, setPage] = useState(1);
@@ -25,7 +25,7 @@ export const CoursesCards = (): JSX.Element => {
                     Total courses: {isLoading ? <Spinner size="sm" ml={2} /> : data?.courses.length ?? 0}
                 </Heading>
 
-                <Stack spacing={6} mx="auto">
+                <Stack spacing={10} mx="auto">
                     {isLoading
                         ? skeletonArray.map(item => <CourseCardLoader key={item} />)
                         : offsetData.map(course => <CourseCard key={course.id} course={course} />)}

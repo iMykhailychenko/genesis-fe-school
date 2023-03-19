@@ -1,17 +1,17 @@
 import { Header } from '@app/components/header/header';
 import { Hero } from '@app/components/hero/hero';
 import { LastLesson } from '@app/components/last-lesson/last-lesson';
-import { CoursesCards } from '@app/pages/course-list/components/courses-cards';
+import { CoursesList } from '@app/pages/home/components/courses-list';
 
-const CourseList = (): JSX.Element => {
+const Home = (): JSX.Element => {
     return (
         <>
             <Header />
             <Hero />
             <LastLesson />
-            <CoursesCards />
+            <CoursesList />
         </>
     );
 };
 
-export default CourseList;
+export default Home;
