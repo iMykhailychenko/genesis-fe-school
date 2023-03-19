@@ -2,8 +2,8 @@ import { Box } from '@chakra-ui/react';
 import { FcApproval } from 'react-icons/all';
 import { useParams } from 'react-router-dom';
 
+import { CourseId, LessonId } from '@app/queries/courses/courses.types';
 import { progress } from '@app/utils/progress/progress';
-import { CourseId, LessonId } from '@app/utils/progress/types';
 
 interface Props {
     lessonId: LessonId;

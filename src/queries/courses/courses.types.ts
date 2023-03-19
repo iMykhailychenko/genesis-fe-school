@@ -1,3 +1,6 @@
+export type CourseId = string;
+export type LessonId = string;
+
 export interface CourseMetaType {
     slug: string;
     skills: string[];
@@ -8,8 +11,8 @@ export interface CourseMetaType {
     };
 }
 
-export interface LessonsType {
-    id: string;
+export interface LessonType {
+    id: LessonId;
     title: string;
     duration: number;
     order: number;
@@ -21,7 +24,7 @@ export interface LessonsType {
 }
 
 export interface SingleCourseType {
-    id: string;
+    id: CourseId;
     title: string;
     tags: string[];
     launchDate: string;
@@ -32,7 +35,7 @@ export interface SingleCourseType {
     previewImageLink: string;
     rating: number;
     meta: CourseMetaType;
-    lessons: LessonsType[];
+    lessons: LessonType[];
 }
 
 export type CoursesListItemType = Omit<SingleCourseType, 'lessons'> & { lessonsCount: number };

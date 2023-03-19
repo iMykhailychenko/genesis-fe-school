@@ -1,13 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+    <meta charset="utf-8" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Learning platform</title>
+    <meta name="description" content="Learning platform" />
+
+    <link href="/meta/ico/512.ico" rel="icon" />
+    <link href="/meta/ico/32.ico" rel="icon" type="image/x-icon" sizes="32x32" />
+    <link href="/meta/ico/128.ico" rel="icon" type="image/x-icon" sizes="128x128" />
+    <link href="/meta/ico/192.ico" rel="icon" type="image/x-icon" sizes="192x192" />
+    <link href="/meta/ico/384.ico" rel="icon" type="image/x-icon" sizes="384x384" />
+    <link href="/meta/ico/512.ico" rel="icon" type="image/x-icon" sizes="512x512" />
+
+    <link href="/meta/png/512.png" rel="apple-touch-icon" />
+    <link href="/meta/png/32.png" rel="apple-touch-icon" type="image/png" sizes="32x32" />
+    <link href="/meta/png/128.png" rel="apple-touch-icon" type="image/png" sizes="128x128" />
+    <link href="/meta/png/192.png" rel="apple-touch-icon" type="image/png" sizes="192x192" />
+    <link href="/meta/png/384.png" rel="apple-touch-icon" type="image/png" sizes="384x384" />
+    <link href="/meta/png/512.png" rel="apple-touch-icon" type="image/png" sizes="512x512" />
+
+    <link rel="mask-icon" href="/meta/png/512.png" color="#000000" />
+
+    <!-- For network errors -->
+    <link rel="preload" href="/disconnected.png" as="image">
+
+    <!-- Start Single Page Apps for GitHub Pages -->
+    <script type="text/javascript">
+        // Single Page Apps for GitHub Pages
+        // MIT License
+        // https://github.com/rafgraph/spa-github-pages
+        // This script checks to see if a redirect is present in the query string,
+        // converts it back into the correct url and adds it to the
+        // browser's history using window.history.replaceState(...),
+        // which won't cause the browser to attempt to load the new url.
+        // When the single page app is loaded further down in this file,
+        // the correct url will be waiting in the browser's history for
+        // the single page app to route accordingly.
+        (function (l) {
+            if (l.search[1] === '/') {
+                var decoded = l.search
+                    .slice(1)
+                    .split('&')
+                    .map(function (s) {
+                        return s.replace(/~and~/g, '&');
+                    })
+                    .join('?');
+                window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
+            }
+        })(window.location);
+    </script>
+    <!-- End Single Page Apps for GitHub Pages -->
+
+</head>
+<body>
+<noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="root"></div>
+<script type="module" src="/src/main.tsx"></script>
+<!--
+This HTML file is a template.
+If you open it directly in the browser, you will see an empty page.
+You can add webfonts, meta tags, or analytics to this file.
+The build step will place the bundled scripts into the <body> tag.
+To begin the development, run `npm start` or `yarn start`.
+To create a production bundle, use `npm run build` or `yarn build`.
+-->
+<script>
+    const consoleimg = (function () {
+        return {
+            load: function (i, { size: s = 320, color: c = 'transparent' } = {}) {
+                const r = new FileReader();
+                r.addEventListener(
+                    'load',
+                    function () {
+                        /* Format the CSS string for console.log */
+                        const o =
+                            "background: url('" +
+                            r.result +
+                            "') left top no-repeat; font-size: " +
+                            s +
+                            'px; background-size: contain; background-color:' +
+                            c;
+                        /* Output to the console. */
+                        console.log('%c     ', o);
+                    },
+                    false,
+                );
+                fetch(i)
+                    /* Return the data as a blob. */
+                    .then(r => r.blob())
+                    .then(b => {
+                        /* Only proceed if the blob is an image. */
+                        if (b.type.indexOf('image') === 0) {
+                            /* Warn if larger than the 8KB that Firefox allows. */
+                            if (b.size > 8192 && navigator.userAgent.indexOf('Firefox') > 0) {
+                                throw new Error('Image size too big to be displayed in Firefox.');
+                            }
+                            return b;
+                        } else {
+                            /* Warn if the blob is not an image. */
+                            throw new Error('Valid image not found.');
+                        }
+                    })
+                    /* Read the blob as base64. */
+                    .then(i => r.readAsDataURL(i))
+                    .catch(e => console.warn(e.message));
+            },
+        };
+    })();
+
+    consoleimg.load('/img.jpg');
+</script>
+</body>
 </html>

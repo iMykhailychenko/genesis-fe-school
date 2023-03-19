@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 import { Box, Image, useDisclosure } from '@chakra-ui/react';
 
-import { PlayerContainer } from '@app/components/video-players/player-container';
+import { PlayerContainer } from '@app/components/video-players/components/player-container';
 import { PreviewPlayer } from '@app/components/video-players/preview-player';
 import { useIsDarkTheme } from '@app/hooks/is-dark-theme.hook';
 
@@ -21,10 +21,9 @@ export const CardMedia = memo(({ title, imageLink, videoLink }: Props): JSX.Elem
             w="100%"
             overflow="hidden"
             borderRight="1px"
+            borderRadius="md"
             position="relative"
-            borderTopLeftRadius="md"
-            borderBottomLeftRadius="md"
-            maxW={{ base: '100%', md: '300px' }}
+            maxW={{ base: '100%', lg: '300px' }}
             bg={isDark ? 'gray.700' : 'gray.200'}
             borderColor={isDark ? 'gray.700' : 'gray.200'}
             onMouseEnter={onOpen}

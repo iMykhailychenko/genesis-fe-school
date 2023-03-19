@@ -1,14 +1,15 @@
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 
 import { get } from 'lodash-es';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useSingleCourseQuery } from '@app/queries/courses/courses.hooks';
-import { LessonsType, SingleCourseType } from '@app/queries/courses/courses.types';
+import { LessonType, SingleCourseType } from '@app/queries/courses/courses.types';
+import { lastLessonStorage } from '@app/utils/last-lesson-storage';
 import { progress } from '@app/utils/progress/progress';
 
 interface UseSelectedLesson {
-    lesson?: LessonsType;
+    lesson?: LessonType;
     data?: SingleCourseType;
     isLoading: boolean;
     selectedIndex: number | null;
@@ -23,8 +24,9 @@ interface Props {
 }
 export const SelectedLessonProvider = ({ children }: Props): JSX.Element => {
     const { courseId } = useParams();
+    const navigate = useNavigate();
 
-    const { data, isLoading } = useSingleCourseQuery(courseId as string);
+    const { data, isLoading, isError } = useSingleCourseQuery(courseId as string);
 
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const lesson = get(data, ['lessons', selectedIndex ?? 0]);
@@ -52,6 +54,12 @@ export const SelectedLessonProvider = ({ children }: Props): JSX.Element => {
     );
 
     useEffect(() => {
+        if (isError) {
+            navigate('/');
+        }
+    }, [isError]);
+
+    useEffect(() => {
         if (data && courseId) {
             const { order, lessons } = progress.getCourseProgress(courseId);
 
@@ -67,6 +75,12 @@ export const SelectedLessonProvider = ({ children }: Props): JSX.Element => {
             setSelectedIndex(index === -1 ? 0 : index);
         }
     }, [data, courseId]);
+
+    useEffect(() => {
+        if (lesson && data?.id) {
+            lastLessonStorage.setLesson({ ...lesson, courseId: data.id });
+        }
+    }, [lesson, data?.id]);
 
     return (
         <SelectedLessonContext.Provider value={{ selectedIndex, setNextVideoIndex, setVideoIndex, lesson, data, isLoading }}>

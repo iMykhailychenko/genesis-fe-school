@@ -1,26 +1,19 @@
-import { createContext, ReactNode, useRef, RefObject, useContext, useState } from 'react';
+import { createContext, ReactNode, RefObject, useContext, useRef } from 'react';
 
-import { useHlsPlayer } from '@app/hooks/hls-player.hook';
-
-interface VideoType {
-    isLoading: boolean;
+interface VideoContextType {
     videoRef: RefObject<HTMLVideoElement>;
-    trigger: (src: string) => void;
 }
-
-const VideoContext = createContext<VideoType>({} as VideoType);
+const VideoContext = createContext<VideoContextType>({} as VideoContextType);
 
 interface Props {
     children: ReactNode;
 }
-
 export const VideoProvider = ({ children }: Props): JSX.Element => {
     const videoRef = useRef<HTMLVideoElement>(null);
-    const { isLoading, trigger } = useHlsPlayer(videoRef);
 
-    return <VideoContext.Provider value={{ videoRef, isLoading, trigger }}>{children}</VideoContext.Provider>;
+    return <VideoContext.Provider value={{ videoRef }}>{children}</VideoContext.Provider>;
 };
 
-export const useVideo = (): VideoType => {
+export const useVideo = (): VideoContextType => {
     return useContext(VideoContext);
 };

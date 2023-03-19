@@ -1,11 +1,13 @@
 import { useState } from 'react';
 
-import { Button, Center, Heading, Stack } from '@chakra-ui/react';
+import { Button, Center, Heading, Spinner, Stack } from '@chakra-ui/react';
 import { range } from 'lodash-es';
 
 import { CourseCardLoader } from '@app/components/course-card/components/course-card-loader';
 import { CourseCard } from '@app/components/course-card/course-card';
 import { useCoursesListQuery } from '@app/queries/courses/courses.hooks';
+
+const skeletonArray = range(5);
 
 export const CoursesCards = (): JSX.Element => {
     const { data, isLoading } = useCoursesListQuery();
@@ -20,12 +22,12 @@ export const CoursesCards = (): JSX.Element => {
         <>
             <Stack w="100%" maxW="1000px" mx="auto" mt={10}>
                 <Heading mb={5} size="sm">
-                    Total courses: {data?.courses.length ?? 0}
+                    Total courses: {isLoading ? <Spinner size="sm" ml={2} /> : data?.courses.length ?? 0}
                 </Heading>
 
                 <Stack spacing={6} mx="auto">
                     {isLoading
-                        ? range(5).map(item => <CourseCardLoader key={item} />)
+                        ? skeletonArray.map(item => <CourseCardLoader key={item} />)
                         : offsetData.map(course => <CourseCard key={course.id} course={course} />)}
                 </Stack>
             </Stack>

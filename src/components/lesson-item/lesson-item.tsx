@@ -6,13 +6,13 @@ import { AiOutlineFieldTime, BiLockOpen, FaPlay } from 'react-icons/all';
 import { DoneIndicator } from '@app/components/lesson-item/components/done-indicator';
 import { PulsingIcon } from '@app/components/lesson-item/components/pulsing-icon';
 import { useIsDarkTheme } from '@app/hooks/is-dark-theme.hook';
-import { LessonsType } from '@app/queries/courses/courses.types';
+import { LessonType } from '@app/queries/courses/courses.types';
 import { getCourseTime } from '@app/utils/time';
 
 interface Props {
     index: number;
     isActive: boolean;
-    lesson: LessonsType;
+    lesson: LessonType;
     onSelect: (order: number) => void;
 }
 export const LessonItem = memo(({ index, lesson, onSelect, isActive }: Props): JSX.Element => {

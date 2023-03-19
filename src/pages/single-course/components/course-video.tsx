@@ -1,33 +1,30 @@
 import { Skeleton, Stack } from '@chakra-ui/react';
 
-import { SingleCourseInfo } from '@app/components/single-course-info/single-course-info';
+import { VideoControls } from '@app/components/video-controls/video-controls';
+import { PlayerContainer } from '@app/components/video-players/components/player-container';
 import { CoursePlayer } from '@app/components/video-players/course-player';
-import { PlayerContainer } from '@app/components/video-players/player-container';
 import { useSelectedLesson } from '@app/context/selected-lesson.context';
+import { CourseInfo } from '@app/pages/single-course/components/course-info';
+import { CourseInfoLoader } from '@app/pages/single-course/components/course-info-loader';
 
 export const CourseVideo = (): JSX.Element => {
-    const { isLoading, data, lesson } = useSelectedLesson();
+    const { isLoading, data } = useSelectedLesson();
 
     return (
-        <Stack flex={1} pt={4} pl={4} spacing={10}>
+        <Stack flex={1} spacing={{ base: 4, md: 10 }}>
             {isLoading ? (
                 <Skeleton minH="500px" h="calc(100vh - 350px)" borderRadius="md" />
             ) : (
-                lesson && (
-                    <PlayerContainer minH="500px" h="calc(100vh - 350px)">
-                        <CoursePlayer lessonId={lesson.id} duration={lesson.duration} />
-                    </PlayerContainer>
-                )
+                <PlayerContainer minH="500px" h="calc(100vh - 350px)" objectFit="contain">
+                    <CoursePlayer />
+                </PlayerContainer>
             )}
 
-            {data && (
-                <SingleCourseInfo
-                    title={data.title}
-                    description={data.description}
-                    rating={data.rating}
-                    skills={data.meta.skills}
-                />
-            )}
+            <VideoControls />
+
+            {isLoading && <CourseInfoLoader />}
+
+            {data && <CourseInfo />}
         </Stack>
     );
 };

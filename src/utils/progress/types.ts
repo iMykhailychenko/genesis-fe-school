@@ -1,5 +1,4 @@
-export type CourseId = string;
-export type LessonId = string;
+import { CourseId, LessonId } from '@app/queries/courses/courses.types';
 
 export interface SingleLessonProgressType {
     isDone: boolean;
@@ -11,10 +10,6 @@ export interface LessonsProgressType {
     lessons: {
         [key: LessonId]: SingleLessonProgressType;
     };
-}
-
-export interface CourseProgressType {
-    [key: CourseId]: LessonsProgressType;
 }
 
 export interface UpdateProgressParams {

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint:ci": "tsc && eslint -c .eslintrc --max-warnings 0 ./src/**"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.5.1",

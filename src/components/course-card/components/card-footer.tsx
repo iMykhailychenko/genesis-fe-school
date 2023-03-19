@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import { Button, HStack, Tag, Text, Tooltip, CardFooter as ChakraCardFooter } from '@chakra-ui/react';
+import { Button, HStack, Tag, Text, Tooltip, CardFooter as ChakraCardFooter, Flex } from '@chakra-ui/react';
 import { AiOutlineFieldTime, BiLockOpen, FaPlay } from 'react-icons/all';
 import { Link } from 'react-router-dom';
 
@@ -16,6 +16,7 @@ interface Props {
 export const CardFooter = memo(({ id, rating, duration, containsLockedLessons }: Props): JSX.Element => {
     return (
         <ChakraCardFooter
+            pt={0}
             flexDir={{ base: 'column-reverse', md: 'row' }}
             justifyContent={{ base: 'flex-start', md: 'space-between' }}
         >
@@ -23,24 +24,24 @@ export const CardFooter = memo(({ id, rating, duration, containsLockedLessons }:
                 Start Now
             </Button>
 
-            <HStack spacing={4} mb={{ base: 5, md: 0 }}>
+            <Flex mb={{ base: 5, md: 0 }} flexWrap="wrap">
                 <Tooltip label="Duration" aria-label="Duration">
-                    <HStack spacing={2}>
+                    <HStack spacing={2} w={{ base: '100%', sm: 'auto' }} mr={4}>
                         <Text>{getCourseTime(duration)}</Text>
                         <AiOutlineFieldTime />
                     </HStack>
                 </Tooltip>
 
-                <Rating value={rating} />
+                <Rating value={rating} mr={4} />
 
                 {containsLockedLessons && (
                     <Tooltip label="Contains Locked Lessons" aria-label="Contains Locked Lessons">
-                        <Tag size="lg">
+                        <Tag size={{ base: 'md', md: 'lg' }}>
                             <BiLockOpen />
                         </Tag>
                     </Tooltip>
                 )}
-            </HStack>
+            </Flex>
         </ChakraCardFooter>
     );
 });

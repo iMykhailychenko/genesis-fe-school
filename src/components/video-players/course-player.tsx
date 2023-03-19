@@ -1,61 +1,46 @@
-import { memo, useEffect, DetailedHTMLProps, VideoHTMLAttributes, useMemo, SyntheticEvent } from 'react';
+import { memo, useEffect, DetailedHTMLProps, VideoHTMLAttributes } from 'react';
 
-import { throttle } from 'lodash-es';
 import { useParams } from 'react-router-dom';
 
-import { VideoLoader } from '@app/components/video-players/video-loader';
+import { VideoLoader } from '@app/components/video-players/components/video-loader';
+import { VideoTimeUpdate } from '@app/components/video-players/components/video-time-update';
 import { useSelectedLesson } from '@app/context/selected-lesson.context';
 import { useVideo } from '@app/context/vidoe.context';
-import { progress } from '@app/utils/progress/progress';
-import { CourseId, LessonId } from '@app/utils/progress/types';
+import { useHlsPlayer } from '@app/hooks/hls-player.hook';
+import { CourseId } from '@app/queries/courses/courses.types';
+import { getPosterUrl } from '@app/utils/poster';
 
-const UPDATE_INTERVAL = 1_000;
+type Props = DetailedHTMLProps<VideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement>;
 
-interface Props extends DetailedHTMLProps<VideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement> {
-    duration: number;
-    lessonId: LessonId;
-    currentTime?: number;
-}
+export const CoursePlayer = memo((props: Props): JSX.Element => {
+    const params = useParams();
+    const courseId = params.courseId as CourseId;
 
-export const CoursePlayer = memo(({ lessonId, duration, currentTime, ...props }: Props): JSX.Element => {
-    const { courseId } = useParams();
+    const { videoRef } = useVideo();
+    const { isLoading, trigger } = useHlsPlayer();
     const { setNextVideoIndex, lesson } = useSelectedLesson();
-    const { time, isDone } = progress.getLessonProgress(courseId as CourseId, lessonId);
-
-    const { videoRef, trigger, isLoading } = useVideo();
-    const poster = lesson ? `${lesson.previewImageLink}/lesson-${lesson.order}.webp` : undefined;
 
     useEffect(() => {
         if (lesson) {
-            trigger(lesson.link);
+            trigger(videoRef, lesson.link);
         }
     }, [lesson]);
 
-    useEffect(() => {
-        if (videoRef?.current) {
-            videoRef.current.currentTime = isDone ? 0 : time;
-        }
-    }, [currentTime]);
-
-    const handleTimeUpdate = useMemo(() => {
-        return throttle((event: SyntheticEvent<HTMLVideoElement>): void => {
-            const currentTime = (event.target as HTMLVideoElement).currentTime ?? 0;
-
-            if (courseId) {
-                progress.updateProgress({ courseId, lessonId, time: currentTime, duration });
-            }
-        }, UPDATE_INTERVAL);
-    }, [lessonId, courseId, duration]);
-
     return (
         <>
-            {isLoading && <VideoLoader />}
+            {isLoading ? (
+                <VideoLoader />
+            ) : (
+                lesson && (
+                    <VideoTimeUpdate videoRef={videoRef} courseId={courseId} lessonId={lesson.id} duration={lesson.duration} />
+                )
+            )}
             <video
                 autoPlay
                 controls
-                poster={poster}
+                poster={getPosterUrl(lesson)}
                 onEnded={setNextVideoIndex}
-                onTimeUpdate={handleTimeUpdate}
+                disablePictureInPicture
                 ref={videoRef}
                 {...props}
             />

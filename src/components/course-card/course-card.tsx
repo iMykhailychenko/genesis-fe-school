@@ -11,7 +11,7 @@ interface Props {
 
 export const CourseCard = ({ course }: Props): JSX.Element => {
     return (
-        <Card direction={{ base: 'column', md: 'row' }} variant="outline">
+        <Card direction={{ base: 'column', lg: 'row' }} variant="outline">
             <CardMedia
                 title={course.title}
                 imageLink={course.previewImageLink}

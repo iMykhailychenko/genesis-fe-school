@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 
 import { AuthWrapper } from '@app/components/auth-wrapper/auth-wrapper';
-import { VideoProvider } from '@app/context/vidoe.context';
+import { NetworkError } from '@app/components/network-error/network-error';
 import { Pages } from '@app/pages/pages';
 import { theme } from '@app/utils/theme';
 
@@ -21,11 +21,11 @@ export const Root = (): JSX.Element => {
         <ChakraProvider theme={theme}>
             <QueryClientProvider client={queryClient}>
                 <BrowserRouter>
-                    <AuthWrapper>
-                        <VideoProvider>
+                    <NetworkError>
+                        <AuthWrapper>
                             <Pages />
-                        </VideoProvider>
-                    </AuthWrapper>
+                        </AuthWrapper>
+                    </NetworkError>
                 </BrowserRouter>
             </QueryClientProvider>
         </ChakraProvider>

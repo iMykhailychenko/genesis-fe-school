@@ -1,6 +1,6 @@
 import { memo, DetailedHTMLProps, VideoHTMLAttributes, useRef, useEffect } from 'react';
 
-import { VideoLoader } from '@app/components/video-players/video-loader';
+import { VideoLoader } from '@app/components/video-players/components/video-loader';
 import { useHlsPlayer } from '@app/hooks/hls-player.hook';
 
 interface Props extends DetailedHTMLProps<VideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement> {
@@ -11,16 +11,16 @@ interface Props extends DetailedHTMLProps<VideoHTMLAttributes<HTMLVideoElement>,
 
 export const PreviewPlayer = memo(({ src, ...props }: Props): JSX.Element => {
     const videoRef = useRef<HTMLVideoElement>(null);
-    const { isLoading, trigger } = useHlsPlayer(videoRef);
+    const { isLoading, trigger } = useHlsPlayer();
 
     useEffect(() => {
-        trigger(src);
+        trigger(videoRef, src);
     }, [trigger, src]);
 
     return (
         <>
             {isLoading && <VideoLoader />}
-            <video autoPlay ref={videoRef} {...props} />
+            <video muted autoPlay ref={videoRef} {...props} />
         </>
     );
 });

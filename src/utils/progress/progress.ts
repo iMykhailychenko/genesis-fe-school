@@ -1,63 +1,42 @@
 import { get } from 'lodash-es';
 
-import { Storage, StorageType } from '@app/utils/progress/storage';
-import {
-    CourseId,
-    CourseProgressType,
-    LessonId,
-    LessonsProgressType,
-    SingleLessonProgressType,
-    UpdateProgressParams,
-} from '@app/utils/progress/types';
+import { CourseId, LessonId } from '@app/queries/courses/courses.types';
+import { LessonsProgressType, SingleLessonProgressType, UpdateProgressParams } from '@app/utils/progress/types';
+import { Storage, StorageType } from '@app/utils/storage';
 
 class Progress {
     private readonly IS_DONE_OFFSET = 5;
-    public static readonly PROGRESS_KEY = 'course-progress-key';
+    public static readonly STORAGE_PREFIX = 'progress-key-';
 
-    constructor(private readonly storage: StorageType<CourseProgressType>) {}
+    constructor(private readonly storage: StorageType<LessonsProgressType>) {}
 
     public getCourseProgress = (courseId: CourseId): LessonsProgressType => {
-        const progress = this.storage.getLocalData();
-        return get(progress, [courseId], { lessons: {}, order: [] }) as LessonsProgressType;
+        return this.storage.getLocalData(courseId) ?? ({ lessons: {}, order: [] } as LessonsProgressType);
     };
 
     public getLessonProgress = (courseId: CourseId, lessonId: LessonId): SingleLessonProgressType => {
-        const progress = this.storage.getLocalData();
-        return get(progress, [courseId, 'lessons', lessonId], { time: 0, isDone: false }) as SingleLessonProgressType;
+        const progress = this.storage.getLocalData(courseId);
+        return get(progress, ['lessons', lessonId], { time: 0, isDone: false }) as SingleLessonProgressType;
     };
 
-    public updateProgress = (newData: UpdateProgressParams): void => {
-        const prev = this.storage.getLocalData() || {};
+    public updateProgress = ({ courseId, lessonId, time, duration }: UpdateProgressParams): void => {
+        const { lessons, order } = this.getCourseProgress(courseId);
+        const { isDone, time: prevTime } = this.getLessonProgress(courseId, lessonId);
+        if (isDone) return;
 
-        const nextState = this.mergeState(prev, newData);
-        if (nextState) {
-            this.storage.setLocalData(nextState);
-        }
-    };
-
-    private mergeState = (prevState: CourseProgressType, newData: UpdateProgressParams): CourseProgressType | null => {
-        const { courseId, lessonId, time, duration } = newData;
-
-        const prevOrder = get(prevState, [courseId, 'order'], []) as LessonId[];
-        const prevLessons = get(prevState, [courseId, 'lessons'], {});
-
-        const prevIsDone = get(prevLessons, [lessonId, 'isDone'], false);
-        if (prevIsDone) return null;
-
-        return {
-            ...prevState,
-            [courseId]: {
-                lessons: {
-                    ...prevLessons,
-                    [lessonId]: {
-                        isDone: duration - time < this.IS_DONE_OFFSET,
-                        time: time || get(prevLessons, [lessonId, 'time'], 0),
-                    },
+        const newState = {
+            lessons: {
+                ...lessons,
+                [lessonId]: {
+                    isDone: duration - time < this.IS_DONE_OFFSET,
+                    time: time || prevTime,
                 },
-                order: prevOrder.includes(lessonId) ? prevOrder : [...prevOrder, lessonId],
             },
+            order: order.includes(lessonId) ? order : [...order, lessonId],
         };
+
+        this.storage.setLocalData(courseId, newState);
     };
 }
 
-export const progress = new Progress(new Storage<CourseProgressType>(Progress.PROGRESS_KEY));
+export const progress = new Progress(new Storage<LessonsProgressType>(Progress.STORAGE_PREFIX));

@@ -93,6 +93,7 @@
         "newlines-between": "always"
       }
     ],
+    "no-console": "warn",
     "import/newline-after-import": "error",
     "import/no-duplicates": "error",
     "import/no-mutable-exports": "error",

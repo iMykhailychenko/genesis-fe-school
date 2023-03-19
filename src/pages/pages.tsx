@@ -4,15 +4,19 @@ import { Box } from '@chakra-ui/react';
 import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 
 import { HEADER_HEIGHT } from '@app/constanta/ui.constants';
+import { PipProvider } from '@app/context/pip.context';
 
 const CourseList = lazy(() => import('./course-list/course-list'));
 const SingleCourse = lazy(() => import('./single-course/single-course'));
+const NotFound = lazy(() => import('./not-found/not-found'));
 
-const SuspenseWrapper = (): JSX.Element => {
+const PagesWrapper = (): JSX.Element => {
     return (
-        <Suspense fallback={null}>
-            <Outlet />
-        </Suspense>
+        <PipProvider>
+            <Suspense fallback={null}>
+                <Outlet />
+            </Suspense>
+        </PipProvider>
     );
 };
 
@@ -24,11 +28,12 @@ export const Pages = (): JSX.Element => {
     }, [pathname]);
 
     return (
-        <Box pt={HEADER_HEIGHT}>
+        <Box py={HEADER_HEIGHT + 20} px={4}>
             <Routes>
-                <Route path="" element={<SuspenseWrapper />}>
+                <Route path="" element={<PagesWrapper />}>
                     <Route path="" element={<CourseList />} />
                     <Route path="/:courseId" element={<SingleCourse />} />
+                    <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>
         </Box>
