@@ -10,7 +10,7 @@ Liv page: https://imykhailychenko.github.io/genesis-fe-school/
 - [x] We display 10 courses on the page and add pagination.
 - [x] Additionally: when hovering, play the video without sound.
 
-![](https://imykhailychenko.github.io/genesis-fe-school/docs/1.gif)
+![Preview](/docs/1.png)
 
 **The course view page displays the first video from the course, details about the course, and a list of lessons:**
 
@@ -18,9 +18,7 @@ Liv page: https://imykhailychenko.github.io/genesis-fe-school/
 - [x] It is necessary to save the progress of watching the video and the lesson of the course (save locally).
 - [x] If the lesson is blocked, show it to the user.
 
-![](https://imykhailychenko.github.io/genesis-fe-school/docs/2.gif)
-
-![](https://imykhailychenko.github.io/genesis-fe-school/docs/3.gif)
+![Preview](/docs/2.png)
 
 Additionally:
 - [x] Make picture in picture functionality (without third-party libraries):
@@ -28,13 +26,14 @@ Additionally:
 - [x] Add a change in video playback speed via the keyboard (without third-party libraries):
 - Also display information next to the video on how to use it.
 
-![](https://imykhailychenko.github.io/genesis-fe-school/docs/4.gif)
-
-![](https://imykhailychenko.github.io/genesis-fe-school/docs/5.gif)
+![Preview](/docs/3.png)
 
 Additional tasks:
 - [x] errors handling from the API (network error, ...);
 - [x] adaptive for the mobile version;
 - [x] video loading animation;
 - [ ] the code is covered by tests;
+
+![Preview](/docs/4.png)
+![Preview](/docs/5.png)
 
