@@ -1,6 +1,6 @@
 # Genesis Front-end School
 
-Liv page: https://imykhailychenko.github.io/genesis-fe-school/
+Live page: https://imykhailychenko.github.io/genesis-fe-school/
 
 **The last 10 courses must be displayed in the course page. The course includes:**
 
