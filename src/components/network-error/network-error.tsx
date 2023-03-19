@@ -24,7 +24,7 @@ export const NetworkError = ({ children }: Props): JSX.Element => {
             {isOpen ? (
                 <Center h="100vh">
                     <Stack spacing={10} alignItems="center">
-                        <Image src="/disconnected.png" alt="Network error" w="200px" />
+                        <Image src="/genesis-fe-school/disconnected.png" alt="Network error" w="200px" />
                         <Text w="250px" textAlign="center">
                             It seems that you have problems with the Internet
                         </Text>
