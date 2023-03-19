@@ -10,4 +10,4 @@ Liv page: https://imykhailychenko.github.io/genesis-fe-school/
 - [x] We display 10 courses on the page and add pagination.
 - [x] Additionally: when hovering, play the video without sound.
 
-[![Watch the video]](/docs/1.mov)
+![Watch the video](/docs/1.mov)
