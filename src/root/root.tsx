@@ -20,7 +20,7 @@ export const Root = (): JSX.Element => {
     return (
         <ChakraProvider theme={theme}>
             <QueryClientProvider client={queryClient}>
-                <BrowserRouter>
+                <BrowserRouter basename="genesis-fe-school">
                     <NetworkError>
                         <AuthWrapper>
                             <Pages />
