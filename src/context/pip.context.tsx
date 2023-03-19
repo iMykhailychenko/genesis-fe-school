@@ -53,12 +53,12 @@ export const PipProvider = ({ children }: Props): JSX.Element => {
             {children}
             {isPipOpen && (
                 <PlayerContainer
-                    w="400px"
                     right={2}
                     bottom={2}
                     position="fixed"
                     cursor="pointer"
                     onClick={handleOpenVideo}
+                    w={{ base: '280px', md: '400px' }}
                     _hover={{ '> div': { opacity: 1 } }}
                 >
                     <Center
