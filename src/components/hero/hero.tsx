@@ -6,7 +6,18 @@ export const Hero = (): JSX.Element => {
     return (
         <Center>
             <Box maxW="1200px" w="100%" position="relative">
-                <Box bg="white" color="black" p={6} borderRadius="lg" position="absolute" left={5} top={5} w="88%" maxW="400px">
+                <Box
+                    p={6}
+                    top={5}
+                    w="88%"
+                    left={5}
+                    bg="white"
+                    maxW="400px"
+                    color="black"
+                    boxShadow="md"
+                    borderRadius="lg"
+                    position="absolute"
+                >
                     <Heading mb={3} fontSize="xx-large">
                         Learning that gets you
                     </Heading>
