@@ -23,13 +23,13 @@ export const useHlsPlayer = (): UseHlsPlayer => {
                 hlsRef.current.loadSource(src);
                 hlsRef.current.attachMedia(videoRef.current);
 
-                hlsRef.current.on(Hls.Events.MEDIA_ATTACHED, onClose);
+                hlsRef.current.on(Hls.Events.MANIFEST_PARSED, onClose);
                 hlsRef.current.on(Hls.Events.ERROR, onClose);
             }
 
             return () => {
                 if (hlsRef.current) {
-                    hlsRef.current.off(Hls.Events.MEDIA_ATTACHED, onClose);
+                    hlsRef.current.off(Hls.Events.MANIFEST_PARSED, onClose);
                     hlsRef.current.off(Hls.Events.ERROR, onClose);
                     hlsRef.current.destroy();
                 }
