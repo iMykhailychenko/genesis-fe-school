@@ -1,8 +1,7 @@
 import React, { ReactNode } from 'react';
 
-import { Button, Center, Image, Stack, Text } from '@chakra-ui/react';
+import { Center, Image, Stack, Text } from '@chakra-ui/react';
 
-import { NetworkError } from '@app/components/network-error/network-error';
 import { PageLoader } from '@app/components/page-loader/page-loader';
 import { useAuthQuery } from '@app/queries/auth/auth.hooks';
 
