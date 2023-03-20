@@ -7,7 +7,9 @@ export const NoContent = (): JSX.Element => {
         <Center h="100%" w="100%">
             <Stack>
                 <Image src={image} alt="No video" />
-                <Text textAlign="center">Ooops! Video is not available</Text>
+                <Text textAlign="center" color="white">
+                    Ooops! Video is not available
+                </Text>
             </Stack>
         </Center>
     );
