@@ -6,7 +6,7 @@ import { CollapseVideo } from '@app/components/video-controls/сollapse-vidoe-bu
 import { useSelectedLesson } from '@app/context/selected-lesson.context';
 
 export const VideoControls = (): JSX.Element => {
-    const { isLoading, selectedIndex, setVideoIndex } = useSelectedLesson();
+    const { lesson, isLoading, selectedIndex, setVideoIndex } = useSelectedLesson();
     const index = selectedIndex ?? 0;
 
     const handlePrev = (): void => {
@@ -37,7 +37,7 @@ export const VideoControls = (): JSX.Element => {
             </HStack>
 
             <HStack spacing={6}>
-                <CollapseVideo />
+                {lesson && !lesson.link ? null : <CollapseVideo />}
 
                 {isLoading ? <Skeleton h={10} w="150px" /> : <PlaybackRate />}
             </HStack>
