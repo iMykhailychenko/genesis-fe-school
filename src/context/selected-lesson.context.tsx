@@ -71,7 +71,7 @@ export const SelectedLessonProvider = ({ children }: Props): JSX.Element => {
                 return;
             }
 
-            const index = data.lessons.findIndex(lesson => lesson.status === 'unlocked' && !lessons[lesson.id].isDone);
+            const index = data.lessons.findIndex(lesson => lesson.status === 'unlocked' && !lessons[lesson.id]?.isDone);
             setSelectedIndex(index === -1 ? 0 : index);
         }
     }, [data, courseId]);
